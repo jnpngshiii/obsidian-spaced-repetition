@@ -35,59 +35,62 @@ import zhCN from "./locale/zh-cn";
 import zhTW from "./locale/zh-tw";
 
 export const localeMap: { [k: string]: Partial<typeof en> } = {
-    af,
-    ar,
-    bn,
-    cs: cz,
-    da,
-    de,
-    en,
-    "en-gb": enGB,
-    es,
-    fr,
-    hi,
-    id,
-    it,
-    ja,
-    ko,
-    mr,
-    nl,
-    nn: no,
-    pl,
-    pt,
-    "pt-br": ptBR,
-    ro,
-    ru,
-    ta,
-    te,
-    th,
-    tr,
-    uk,
-    ur,
-    vi,
-    "zh-cn": zhCN,
-    "zh-tw": zhTW,
+  af,
+  ar,
+  bn,
+  cs: cz,
+  da,
+  de,
+  en,
+  "en-gb": enGB,
+  es,
+  fr,
+  hi,
+  id,
+  it,
+  ja,
+  ko,
+  mr,
+  nl,
+  nn: no,
+  pl,
+  pt,
+  "pt-br": ptBR,
+  ro,
+  ru,
+  ta,
+  te,
+  th,
+  tr,
+  uk,
+  ur,
+  vi,
+  "zh-cn": zhCN,
+  "zh-tw": zhTW,
 };
 
 const locale = localeMap[moment.locale()];
 
 // https://stackoverflow.com/a/41015840/
 function interpolate(str: string, params: Record<string, unknown>): string {
-    const names: string[] = Object.keys(params);
-    const vals: unknown[] = Object.values(params);
-    return new Function(...names, `return \`${str}\`;`)(...vals);
+  const names: string[] = Object.keys(params);
+  const vals: unknown[] = Object.values(params);
+  return new Function(...names, `return \`${str}\`;`)(...vals);
 }
 
-export function t(str: keyof typeof en, params?: Record<string, unknown>): string {
-    if (!locale) {
-        console.error(`SRS error: Locale ${moment.locale()} not found.`);
-    }
+export function t(
+  str: keyof typeof en,
+  params?: Record<string, unknown>,
+): string {
+  if (!locale) {
+    console.error(`SRS error: Locale ${moment.locale()} not found.`);
+  }
 
-    const result = (locale && locale[str]) || en[str];
+  const result = (locale && locale[str]) || en[str];
 
-    if (params) {
-        return interpolate(result, params);
-    }
+  if (params) {
+    return interpolate(result, params);
+  }
 
-    return result;
+  return result;
 }
